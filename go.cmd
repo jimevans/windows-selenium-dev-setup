@@ -1,15 +1,15 @@
 @echo off
 echo Installing SVN client...
-start /wait msiexec /passive /i %~dp0packages\Slik-Subversion-1.7.2-win32.msi
+start /wait msiexec /passive /i %~dp0packages\Slik-Subversion.msi
 
 echo Installing Python 2.7.1...
-start /wait msiexec /passive /i %~dp0packages\Python-2.7.2.msi
+start /wait msiexec /passive /i %~dp0packages\python.msi
 
 echo Installing Ruby 1.9.3...
-start /wait %~dp0packages\rubyinstaller-1.9.3-p0.exe /silent
+start /wait %~dp0packages\rubyinstaller.exe /silent
 
 echo Installing Java JDK 1.6 update 30...
-start /wait %~dp0packages\jdk-6u30-windows-i586.exe /s
+start /wait %~dp0packages\jdk.exe /s
 
 echo Installing .NET Framework 3.5 SP1...
 start /wait %~dp0packages\dotnetfx35.exe /passive
