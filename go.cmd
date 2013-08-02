@@ -20,10 +20,11 @@ for /f "delims=, tokens=1-7" %%a in (%~dp0packagelist.txt) do (
         start /wait "" "%~dp0packages\%%b" %%e
     )
     if not "%%f"==" " (
-        set PATHADDITION=!PATHADDITION!;%%f
+        if not "PATHADDITION"=="" set PATHADDITION=!PATHADDITION!;
+        set PATHADDITION=!PATHADDITION!%%f
     )
 )
 
 echo Updating PATH environment variable...
-REG ADD "HKCU\Environment" /v Path /t REG_EXPAND_SZ /d "%PATH%;%PATHADDITION%" /f
+REG ADD "HKCU\Environment" /v Path /t REG_EXPAND_SZ /d "%PATHADDITION%" /f
 endlocal
