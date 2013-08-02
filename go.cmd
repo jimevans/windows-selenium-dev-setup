@@ -1,7 +1,8 @@
+@setlocal
 @echo off
 if not exist packages md packages
 
-for /f "delims=, tokens=1-6" %%a in (%~dp0packagelist.txt) do (
+for /f "delims=, tokens=1-7" %%a in (%~dp0packagelist.txt) do (
     echo Downloading %%a...
     if "%%c"==" " (
         bin\curl -# -o packages\%%b %%d
@@ -10,14 +11,19 @@ for /f "delims=, tokens=1-6" %%a in (%~dp0packagelist.txt) do (
     )
 )
 
-for /f "delims=, tokens=1-6" %%a in (%~dp0packagelist.txt) do (
+setlocal EnableDelayedExpansion
+for /f "delims=, tokens=1-7" %%a in (%~dp0packagelist.txt) do (
     echo Installing %%a...
-    if "%%f"=="MSI" (
+    if "%%g"=="MSI" (
         start /wait msiexec /passive /i "%~dp0packages\%%b"
     ) else (
         start /wait "" "%~dp0packages\%%b" %%e
     )
+    if not "%%f"==" " (
+        set PATHADDITION=!PATHADDITION!;%%f
+    )
 )
 
 echo Updating PATH environment variable...
-REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t REG_EXPAND_SZ /d "%PATH%;%ProgramFiles%\SlikSvn\bin;%ProgramFiles%\Java\jdk1.6.0_35\bin;C:\Python27;C:\Ruby193\bin;%SystemRoot%\Microsoft.NET\Framework\v3.5" /f
+REG ADD "HKCU\Environment" /v Path /t REG_EXPAND_SZ /d "%PATH%;%PATHADDITION%" /f
+endlocal
