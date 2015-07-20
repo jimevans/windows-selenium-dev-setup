@@ -1,35 +1,15 @@
-@setlocal
 @echo off
-if not exist packages md packages
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "(iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))) >$null 2>&1" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+choco install -y git
+choco install -y python2
+choco install -y ruby
+choco install -y jdk7
+choco install -y dotnet3.5
 
-REM if we are on a for-realzies 32-bit OS, use the 32-bit package list
-REM otherwise, use the 64-bit package list
-set PACKAGELISTFILE=packagelist.txt
-if "%PROCESSOR_ARCHITECTURE%"=="x86" if not defined PROCESSOR_ARCHITEW6432 set PACKAGELISTFILE=packagelist32.txt
+REM .NET Framework 4.0 is a prerequisite for chocolatey,
+REM so is unneeded as a separate install.
+REM choco install -y dotnet4.0
 
-for /f "delims=, tokens=1-7" %%a in (%~dp0%PACKAGELISTFILE%) do (
-    echo Downloading %%a...
-    if "%%c"==" " (
-        bin\curl -# -o packages\%%b %%d
-    ) else (
-        bin\curl -# -o packages\%%b %%c %%d
-    )
-)
-
-setlocal EnableDelayedExpansion
-for /f "delims=, tokens=1-7" %%a in (%~dp0%PACKAGELISTFILE%) do (
-    echo Installing %%a...
-    if "%%g"=="MSI" (
-        start /wait msiexec /passive /i "%~dp0packages\%%b"
-    ) else (
-        start /wait "" "%~dp0packages\%%b" %%e
-    )
-    if not "%%f"==" " (
-        if not "PATHADDITION"=="" set PATHADDITION=!PATHADDITION!;
-        set PATHADDITION=!PATHADDITION!%%f
-    )
-)
-
-echo Updating PATH environment variable...
-REG ADD "HKCU\Environment" /v Path /t REG_EXPAND_SZ /d "%PATHADDITION%" /f
-endlocal
+REM TODO: Update to installation of Visual Studio 2015
+REM when package is available.
+if [%1]==[addvs] choco install -y visualstudiocommunity2013
