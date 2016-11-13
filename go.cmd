@@ -3,7 +3,7 @@
 choco install -y git
 choco install -y python2
 choco install -y ruby
-choco install -y jdk7
+choco install -y jdk8
 choco install -y dotnet3.5
 
 REM .NET Framework 4.0 is a prerequisite for chocolatey,
