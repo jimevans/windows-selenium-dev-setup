@@ -10,4 +10,4 @@ REM .NET Framework 4.0 is a prerequisite for chocolatey,
 REM so is unneeded as a separate install.
 REM choco install -y dotnet4.0
 
-if [%1]==[addvs] choco install -y visualstudio2015community -packageParameters "--Features MDDCPlusPlus"
+if [%1]==[addvs] choco install -y visualstudio2017community -packageParameters "--Features MDDCPlusPlus"
