@@ -4,10 +4,10 @@ choco install -y git
 choco install -y python2
 choco install -y ruby
 choco install -y jdk8
-choco install -y dotnet3.5
+choco install -y bazel
 
 REM .NET Framework 4.0 is a prerequisite for chocolatey,
 REM so is unneeded as a separate install.
 REM choco install -y dotnet4.0
 
-if [%1]==[addvs] choco install -y visualstudio2017community --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.NetCoreTools"
+if [%1]==[addvs] choco install -y visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.NetCoreTools"
